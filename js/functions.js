@@ -25,3 +25,19 @@ const extractNumber = (string) => {
   return parseFloat(result) ;
 }
 
+const targetString = (string,length,addString) => {
+ let newString = addString + string
+ if(newString.length > length) {
+ let maxString = addString.slice ();
+  return newString = maxString + string;
+ }
+ return newString
+}
+
+ /*все строки обеденились - Символы добавляются в начало строки
+ вычисть длину строки,
+ -если она меньше count, еще раз добавить addString
+ -если она больше count, обрезать addString до нужной длины убрав последние буквы
+ (я должна перебрать addString )
+ НО string не болжна обрезаться
+ */
