@@ -26,12 +26,11 @@ const extractNumber = (string) => {
 }
 
 const targetString = (string,minLength,addString) => {
-  const newString = string;
+  let newString = string;
   while(newString.length < minLength) {
     const addNewString = newString.length + addString.length;
-    const newAddString = addNewString <= minLength ? addString: addString.slice(0,minLength - addNewString)
-    return newAddString + newString;
+    const newAddString = addNewString <= minLength ? addString : addString.slice(0,minLength - addNewString);
+    newString = newAddString + newString;
   }
-  return newString
+  return newString;
 }
-
