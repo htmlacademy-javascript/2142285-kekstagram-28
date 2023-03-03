@@ -28,29 +28,39 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
+function getRandomInteger (min, max) {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-};
+}
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+const createIdGenerator = () => {
+  let lastGeneratedId = 0;
+  return function () {
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
+};
+const generateId = createIdGenerator();
+const generatePhotoId = createIdGenerator();
+const generateCommentId = createIdGenerator();
+
 const comments = {
-  id: getRandomInteger(1,200),
+  id: generateCommentId(),
   avatar: `img/avatar-${getRandomInteger(1,idCommentCount)}.svg`,
   message: getRandomArrayElement(messages) + getRandomArrayElement(messages) ,
   name: getRandomArrayElement(names),
 };
 
 const creatPhoto = () => ({
-  id: getRandomInteger(1,creatPhotoCount),
-  url:`photos${getRandomInteger(1,creatPhotoCount)}.jpg `,
+  id: generateId(),
+  url:`photos${generatePhotoId()}.jpg `,
   description: getRandomArrayElement(descriptions),
   like: getRandomInteger(15,200),
   comment: comments,
 });
 
 const creatPhotos = Array.from({length:creatPhotoCount}, creatPhoto);
-
