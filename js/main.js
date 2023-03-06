@@ -1,1 +1,1 @@
-import {creatPhotos} from './data.js';
+import {creatPhotos} from './util.js';

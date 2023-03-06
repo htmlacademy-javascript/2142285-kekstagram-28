@@ -1,5 +1,3 @@
-import {getRandomInteger,getRandomArrayElement,createIdGenerator} from './util.js';
-
 const creatPhotoCount = 25;
 const idCommentCount = 6;
 const descriptions = [
@@ -29,28 +27,4 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-
-const generateId = createIdGenerator();
-const generatePhotoId = createIdGenerator();
-
-const createComment = () => {
-  const comments = {
-    id: generateId(),
-    avatar: `img/avatar-${getRandomInteger(1,idCommentCount)}.svg`,
-    message: getRandomArrayElement(messages) + getRandomArrayElement(messages) ,
-    name: getRandomArrayElement(names),
-  };
-  return comments;
-};
-
-const creatPhoto = () => ({
-  id: generateId(),
-  url:`photos${generatePhotoId()}.jpg `,
-  description: getRandomArrayElement(descriptions),
-  like: getRandomInteger(15,200),
-  comment:createComment(),
-});
-
-const creatPhotos = Array.from({length:creatPhotoCount}, creatPhoto);
-
-export {creatPhotos};
+export {messages,names,descriptions,idCommentCount,creatPhotoCount};
