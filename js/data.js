@@ -1,4 +1,3 @@
-const creatPhotoCount = 25;
 const idCommentCount = 6;
 const descriptions = [
   'Вот бы оказаться сейчас здесь',
@@ -27,4 +26,4 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-export {messages,names,descriptions,idCommentCount,creatPhotoCount};
+export {messages,names,descriptions,idCommentCount};
