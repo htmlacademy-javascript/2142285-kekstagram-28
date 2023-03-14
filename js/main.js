@@ -1,1 +1,1 @@
-import {creatPhotos} from './util.js';
+import {containerThumbnails} from './thumbnail.js';

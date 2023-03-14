@@ -1,4 +1,4 @@
-import {messages,names,descriptions,idCommentCount,creatPhotoCount} from './data.js';
+import {messages,names,descriptions,idCommentCount} from './data.js';
 
 function getRandomInteger (min, max) {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -19,25 +19,26 @@ const createIdGenerator = () => {
 
 const generateId = createIdGenerator();
 const generatePhotoId = createIdGenerator();
+const generateCommentId = createIdGenerator();
 
 const createComment = () => {
-  const comments = {
-    id: generateId(),
+  const message = {
+    id: generateCommentId(),
     avatar: `img/avatar-${getRandomInteger(1,idCommentCount)}.svg`,
-    message: getRandomArrayElement(messages) + getRandomArrayElement(messages) ,
+    message: getRandomArrayElement(messages) + getRandomArrayElement(messages),
     name: getRandomArrayElement(names),
   };
-  return comments;
+  return message;
 };
 
-const creatPhoto = () => ({
+const createPhoto = () => ({
   id: generateId(),
-  url:`photos${generatePhotoId()}.jpg `,
+  url:`photos/${generatePhotoId()}.jpg`,
   description: getRandomArrayElement(descriptions),
-  like: getRandomInteger(15,200),
-  comment:createComment(),
+  likes: getRandomInteger(15,200),
+  comments:Array.from({length: getRandomInteger(0, 50)}, createComment),
 });
 
-const creatPhotos = Array.from({length:creatPhotoCount}, creatPhoto);
+const creatPhotos = (count) => Array.from({length:count}, createPhoto);
 
 export {creatPhotos};
