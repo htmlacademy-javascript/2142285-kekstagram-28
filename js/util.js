@@ -22,13 +22,13 @@ const generatePhotoId = createIdGenerator();
 const generateCommentId = createIdGenerator();
 
 const createComment = () => {
-  const message = {
+  const messageCount = {
     id: generateCommentId(),
     avatar: `img/avatar-${getRandomInteger(1,idCommentCount)}.svg`,
     message: getRandomArrayElement(messages) + getRandomArrayElement(messages),
     name: getRandomArrayElement(names),
   };
-  return message;
+  return messageCount;
 };
 
 const createPhoto = () => ({
@@ -36,9 +36,12 @@ const createPhoto = () => ({
   url:`photos/${generatePhotoId()}.jpg`,
   description: getRandomArrayElement(descriptions),
   likes: getRandomInteger(15,200),
-  comments:Array.from({length: getRandomInteger(0, 50)}, createComment),
+  comments:Array.from({length: getRandomInteger(1, 50)}, createComment),
 });
+
 
 const creatPhotos = (count) => Array.from({length:count}, createPhoto);
 
-export {creatPhotos};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {creatPhotos, isEscapeKey, createComment};
