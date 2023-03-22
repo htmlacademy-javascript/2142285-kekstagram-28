@@ -1,14 +1,15 @@
-import {isEscapeKey} from './util.js';
+import {createPhoto, isEscapeKey} from './util.js';
 import {renderThumbnails} from './thumbnail.js';
+
 
 const bigPicture = document.querySelector('.big-picture');//находим класс больших фото
 const bigPictureCancel = document.querySelector('.big-picture__cancel');// находим скласс для удаление фото
-const COMMENTS_PER_LOAD = 5;
 const container = document.querySelector('.pictures');//контейнер для массив миниатюр
-const commentList = bigPicture.querySelector('.social__comments');// спискок коментов
+let commentList = bigPicture.querySelector('.social__comments');// спискок коментов
 const commentListItem = bigPicture.querySelector('.social__comment');// однин комента = шаблон
 const commentsCount = bigPicture.querySelector('.social__comment-count');// счетчик
 const commentsLoader = bigPicture.querySelector('.comments-loader'); // кнопка загрузить ещё
+
 
 const onDocumentKeydown = (evt) => { // выносим функцию для обработчика
   if (isEscapeKey(evt)) {
@@ -33,11 +34,18 @@ bigPictureCancel.addEventListener('click', () => { //добавляем клас
   closeBigPicture();
 });
 
+const renderPictureDetails = ({ url, description, likes }) => { // создаем большую фото
+  bigPicture.querySelector('.big-picture__img img').src = url;
+  bigPicture.querySelector('.big-picture__img img').alt = description;
+  bigPicture.querySelector('.likes-count').textContent = likes;
+  bigPicture.querySelector('.social__caption').textContent = description;
+};
 
-const commentFragment = document.createDocumentFragment();// коробочка для коментов
-const renderComments = (comments) => { //задаем параметр комментов из утилитов
+// функция отрисовать и показать все комменты
+const commentFragment = document.createDocumentFragment();
+const renderComments = (array) => {
   commentList.innerHTML = ''; // очищаем старые комменты
-  comments.forEach(({avatar, name, message}) => {
+  array.forEach(({avatar, name, message}) => {
     const newComment = commentListItem.cloneNode(true);
     newComment.querySelector('.social__picture').src = avatar;
     newComment.querySelector('.social__picture').alt = name;
@@ -47,20 +55,32 @@ const renderComments = (comments) => { //задаем параметр комм�
   return commentList.append(commentFragment);
 };
 
-const renderPictureDetails = ({ url, description, likes }) => { // создаем большую фото
-  bigPicture.querySelector('.big-picture__img img').src = url;
-  bigPicture.querySelector('.big-picture__img img').alt = description;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.social__caption').textContent = description;
+// функция для показа 5 комментариев
+let commentsShown = 0; // показанных коментов
+const commentsPerLoad = 5;// сколько надо показывать коментов
+
+const getComments = (array) => {
+  commentsShown += commentsPerLoad;
+
+  const fragment = document.createDocumentFragment();
+  for (let i = 0; i < commentsShown; i++){
+    const commentElement = renderComments(array[i]);
+    fragment.append(commentElement);
+}
+  commentList.innerHTML = '';
+  commentList.append(fragment);
+  commentsCount.innerHTML = `${commentsCount} из <span class="comments-count">${array.length}</span> комментариев`;
+
 };
+
+/*commentsLoader.addEventListener('click', () => {
+  renderComments();
+});*/
 
 const showBigPicture = (data) => { // показываем большую фото
   openBigPicture();//функция по открытию большой фотки
-  commentsLoader.classList.add('hidden');
-  commentsCount.classList.add('.hidden');
-
   renderPictureDetails(data); //добовляем фото
-  renderComments(data.comments);// добавляем комменты
+  getComments(data.comments);// добавляем комменты
 };
 
 const renderGallery = (pictures) => { //вешаем обработчик на клик
@@ -76,7 +96,7 @@ const renderGallery = (pictures) => { //вешаем обработчик на �
     );
     showBigPicture(picture); // показывает большой фото из миниатюр
   });
-  renderThumbnails(pictures,container); //возвращаем миниатюру 
+  renderThumbnails(pictures,container); //возвращаем миниатюру
 };
 
 export {renderGallery};
