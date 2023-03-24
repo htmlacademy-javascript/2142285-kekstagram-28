@@ -10,7 +10,8 @@ const commentList = bigPicture.querySelector('.social__comments');// списк�
 const commentListItem = bigPicture.querySelector('.social__comment');// однин комента = шаблон
 const commentsCount = bigPicture.querySelector('.social__comment-count');// счетчик
 const commentsLoader = bigPicture.querySelector('.comments-loader'); // кнопка загрузить ещё
-let array = renderThumbnails;
+let commentsArray = [];
+
 const onDocumentKeydown = (evt) => { // выносим функцию для обработчика
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -75,14 +76,15 @@ const getComments = (array) => {
 
 
 commentsLoader.addEventListener('click', () => {
-  getComments();
+  getComments(commentsArray);
 });
 
 
 const showBigPicture = (data) => { // показываем большую фото
   openBigPicture();//функция по открытию большой фотки
-  renderPictureDetails(data);//добовляем фото
-  getComments(data.comments);
+  renderPictureDetails(data);
+  commentsArray = data.comments;//добовляем фото
+  getComments(commentsArray);
 };
 
 const renderGallery = (pictures) => { //вешаем обработчик на клик
@@ -92,7 +94,7 @@ const renderGallery = (pictures) => { //вешаем обработчик на �
     if (!thumbnail){
       return;
     }
-    if (commentsShown >= commentsPerLoad){
+    if (commentsShown >= 1){
       commentsShown = 0;
     }
 
