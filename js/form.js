@@ -1,4 +1,6 @@
 import {isEscapeKey} from './util.js';
+import {resetScale} from './scale.js';
+import {addEffects} from './effect.js';
 
 const maxTagCount = 5;
 const uploadFile = document.querySelector('#upload-file');//загрузки файла
@@ -23,7 +25,7 @@ const onDocumentKeydown = (evt) => { // выносим функцию для о�
   }
 };
 
-const stopFocus = (evt) => { //
+const stopFocus = (evt) => {
   if (isEscapeKey(evt)) {
     evt.stopPropagation();
   }
@@ -48,6 +50,8 @@ uploadFile.addEventListener('change', () => { //добавляем класс hi
 uploadСancel.addEventListener('click', () => {//добавляем класс hidden прячем модалку
   form.reset();// сбрасываем поля формы
   pristine.reset();
+  resetScale();
+  addEffects.reset();
   closeimgUpload();
 });
 
@@ -89,12 +93,13 @@ pristine.addValidator(hashtageField, validTagUnique, 'Хэштеги повто�
 const validateComment = (string) => string.length <= 140; // проверяем длину строки
 pristine.addValidator(commentField, validateComment,'Максимальная длина 140 символов');
 
-const onFOrmSumbit = (evt) => {
+const onFormSumbit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()){
     form.submit();
   }
 };
 
+form.addEventListener('submit',onFormSumbit);
 
 export {openimgUpload};
