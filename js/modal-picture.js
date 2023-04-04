@@ -30,7 +30,6 @@ function closeBigPicture () { // функция для добавления кл
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
-
 bigPictureCancel.addEventListener('click', () => { //добавляем класс hidden прячем большое изображение
   closeBigPicture();
 });
@@ -51,10 +50,15 @@ const renderPictureDetails = (picture) => { // создаем большую ф�
   bigPicture.querySelector('.social__caption').textContent = picture.description;
 };
 
-
 // функция для показа 5 комментарие
 const getComments = (array) => {
   commentsShown += commentsPerLoad;
+  if (commentsShown >= array.length) {
+    commentsLoader.classList.add('hidden');
+    commentsShown = array.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
 
   if (commentsShown >= array.length) {
     commentsLoader.classList.add('hidden');
@@ -73,7 +77,6 @@ const getComments = (array) => {
 
   commentsCount.innerHTML = `${commentsShown} из ${array.length} комментариев`;
 };
-
 
 commentsLoader.addEventListener('click', () => {
   getComments(commentsArray);
