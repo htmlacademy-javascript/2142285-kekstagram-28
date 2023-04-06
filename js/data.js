@@ -1,3 +1,4 @@
+// массивы комментариев
 const idCommentCount = 6;
 const descriptions = [
   'Вот бы оказаться сейчас здесь',
@@ -77,6 +78,3 @@ const effects = [
     unit: '',
   },
 ];
-
-export {messages,names,descriptions,idCommentCount, effects};
-

@@ -63,4 +63,12 @@ const onEffectChange = (evt) => {
 effectsList.addEventListener('change',onEffectChange);
 const addEffects = sliderElement.noUiSlider.on('update', filterImage);
 
-export {addEffects};
+const resetEffect = () => {
+  choosenEffect = effects[0];
+  imgPreview.className = `effects__preview--${choosenEffect.name}`;
+  applyEffect();
+  getSlaider();
+};
+
+export {addEffects, resetEffect};
+

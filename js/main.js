@@ -8,7 +8,6 @@ import {addEffects} from './effect.js';
 const pictures = creatPhotos(25);
 renderThumbnails(pictures);
 
-
 renderGallery(pictures);
 
 

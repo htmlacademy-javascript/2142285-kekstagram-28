@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {resetScale} from './scale.js';
-import {addEffects} from './effect.js';
+import {resetEffect} from './effect.js';
 
 const maxTagCount = 5;
 const uploadFile = document.querySelector('#upload-file');//загрузки файла
@@ -51,7 +51,7 @@ uploadСancel.addEventListener('click', () => {//добавляем класс h
   form.reset();// сбрасываем поля формы
   pristine.reset();
   resetScale();
-  addEffects.reset();
+  resetEffect();
   closeimgUpload();
 });
 
