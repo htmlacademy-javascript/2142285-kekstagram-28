@@ -1,12 +1,10 @@
 import {effects} from './data.js';
 
-
 const sliderElement = document.querySelector('.effect-level__slider');// слайдер - ручка
 const valueElement = document.querySelector('.effect-level__value');// поле ввода;
 const imgPreview = document.querySelector('.img-upload__preview img');// загружженное изображения, добавить класс и обновить filter
 const effectsList = document.querySelector('.effects__list');//  переключения эффектов
 const effectElement = document.querySelector('.img-upload__effect-level');//  полностью слайдер
-//const effectRadio = document.querySelector('.effects__radio');
 
 let choosenEffect = effects[0];
 
@@ -73,3 +71,4 @@ const resetEffect = () => {
 };
 
 export {addEffects, resetEffect};
+

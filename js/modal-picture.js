@@ -1,5 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {renderThumbnails} from './thumbnail.js';
+
 let commentsShown = 0; // показанных коментов
 const commentsPerLoad = 5;// сколько надо показывать коментов
 const bigPicture = document.querySelector('.big-picture');//находим класс больших фото
@@ -59,6 +60,13 @@ const getComments = (array) => {
     commentsLoader.classList.remove('hidden');
   }
 
+  if (commentsShown >= array.length) {
+    commentsLoader.classList.add('hidden');
+    commentsShown = array.length;
+  } else {
+    commentsLoader.classList.remove('hidden');
+  }
+
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShown; i++){
     const commentElement = renderComment(array[i]);
@@ -73,6 +81,7 @@ const getComments = (array) => {
 commentsLoader.addEventListener('click', () => {
   getComments(commentsArray);
 });
+
 
 const showBigPicture = (data) => { // показываем большую фото
   openBigPicture();//функция по открытию большой фотки
@@ -91,6 +100,7 @@ const renderGallery = (pictures) => { //вешаем обработчик на �
     if (commentsShown >= 1){
       commentsShown = 0;
     }
+
     const picture = pictures.find( // ищем в массиве миниатюр
       (item) => item.id === +thumbnail.dataset.thumbnailId//совпадение id фото с id миниатюры
     );

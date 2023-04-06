@@ -78,7 +78,3 @@ const effects = [
     unit: '',
   },
 ];
-
-
-
-export {messages,names,descriptions,idCommentCount, effects};
