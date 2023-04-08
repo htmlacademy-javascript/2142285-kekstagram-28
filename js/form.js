@@ -1,6 +1,9 @@
-import {isEscapeKey} from './util.js';
+import {isEscapeKey, showAlert} from './util.js';
 import {resetScale} from './scale.js';
 import {resetEffect} from './effect.js';
+import {showSuccessMessage, showErrorMessage} from './message.js';
+import { sendPhoto } from './api.js';
+
 
 const maxTagCount = 5;
 const uploadFile = document.querySelector('#upload-file');//загрузки файла
@@ -9,7 +12,12 @@ const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const form = document.querySelector('.img-upload__form');
 const hashtageField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
+const sendButton = document.querySelector('.img-upload__submit');//кнопка публикации
 
+const SubmitButtonText = {
+  IDLE: 'ОПУБЛИКОВАТЬ',
+  SENDING: 'ОПУБЛИКОВАТЬ...'
+};
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -41,6 +49,10 @@ function closeimgUpload () { // функция для добавления кл�
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  form.reset();// сбрасываем поля формы
+  pristine.reset();
+  resetScale();
+  resetEffect();
 }
 
 uploadFile.addEventListener('change', () => { //добавляем класс hidden прячем модалку
@@ -93,13 +105,42 @@ pristine.addValidator(hashtageField, validTagUnique, 'Хэштеги повто�
 const validateComment = (string) => string.length <= 140; // проверяем длину строки
 pristine.addValidator(commentField, validateComment,'Максимальная длина 140 символов');
 
-const onFormSumbit = (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()){
-    form.submit();
-  }
+
+const blockSubmitButton = () => {
+  sendButton.disabled = true;
+  sendButton.textContent = SubmitButtonText.SENDING;
 };
 
-form.addEventListener('submit',onFormSumbit);
+const unblockSubmitButton = () => {
+  sendButton.disabled = false;
+  sendButton.textContent = SubmitButtonText.IDLE;
+};
 
-export {openimgUpload};
+
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit',(evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+
+      sendPhoto(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(
+          (err) => {
+            showAlert(err.message);
+            showErrorMessage();
+          }
+        )
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+const loadSussecs = () => {
+  showSuccessMessage();
+  closeimgUpload();
+};
+
+export {openimgUpload, stopFocus, setUserFormSubmit, closeimgUpload, loadSussecs, onDocumentKeydown};
