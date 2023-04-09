@@ -1,13 +1,26 @@
-import {creatPhotos} from './util.js';
+//import {creatPhotos} from './util.js';
 import {renderThumbnails} from './thumbnail.js';
 import {renderGallery} from './modal-picture.js';
-import {openimgUpload} from './form.js';
+import {openimgUpload, loadSussecs, setUserFormSubmit} from './form.js';
 import {resetScale} from './scale.js';
 import {addEffects} from './effect.js';
+import {getPhotos} from './api.js';
+import {showAlert} from './util.js';
 
-const pictures = creatPhotos(25);
-renderThumbnails(pictures);
+//const pictures = creatPhotos(25);
+//renderThumbnails(pictures);
 
-renderGallery(pictures);
+//renderGallery(pictures);
+
+getPhotos().then((photos) => {
+  renderThumbnails(photos);
+  renderGallery(photos);
+
+}).catch((err) => {
+  showAlert (err);
+});
+
+setUserFormSubmit(loadSussecs);
+
 
 
