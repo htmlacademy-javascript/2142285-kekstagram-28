@@ -65,6 +65,37 @@ const showAlert = (message) => {
 
 //const creatPhotos = (count) => Array.from({length:count}, createPhoto);
 
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {isEscapeKey, showAlert};
+function throttle (callback, delayBetweenFrames) {
+  let lastTime = 0;
+  return (...rest) => {
+    const now = new Date();
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+}
+
+// Перемешиваем случайно массив
+const shuffleArrayRandom = (array) => {
+  for (let i = 0; i < array.length - 1; i++) {
+    const j = getRandomInteger(0, array.length - 1);
+    const buffer = array[i];
+    array[i] = array[j];
+    array[j] = buffer;
+  }
+
+  return array;
+};
+
+export {isEscapeKey, showAlert,shuffleArrayRandom, throttle,debounce};
