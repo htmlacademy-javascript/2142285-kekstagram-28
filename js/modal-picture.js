@@ -90,9 +90,9 @@ const showBigPicture = (data) => { // показываем большую фот
   getComments(commentsArray);
 };
 
-const renderGallery = (pictures) => { //вешаем обработчик на клик
+const renderGallery = (pictures) => {
 
-  container.addEventListener('click', (evt) => {
+  container.addEventListener('click', (evt) => {//вешаем обработчик на клик
     const thumbnail = evt.target.closest('[data-thumbnail-id]');// ищем по атрибуту
     if (!thumbnail){
       return;
