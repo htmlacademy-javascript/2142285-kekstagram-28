@@ -7,11 +7,14 @@ import {addEffects} from './effect.js';
 import {getPhotos} from './api.js';
 import {showAlert} from './util.js';
 import {initSortPicturesActions} from './fillter.js';
+import {showNewPhoto} from './photos.js';
 
 //const pictures = creatPhotos(25);
 //renderThumbnails(pictures);
 
 //renderGallery(pictures);
+
+showNewPhoto ();
 
 getPhotos().then((photos) => {
   renderThumbnails(photos);
@@ -23,6 +26,3 @@ getPhotos().then((photos) => {
 });
 
 setUserFormSubmit(loadSussecs);
-
-
-
