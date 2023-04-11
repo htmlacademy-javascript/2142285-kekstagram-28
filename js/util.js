@@ -8,30 +8,6 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-/*const createIdGenerator = () => {
-  let lastGeneratedId = 0;
-  return function () {
-    lastGeneratedId += 1;
-    return lastGeneratedId;
-  };
-};
-
-const generateId = createIdGenerator();
-const generatePhotoId = createIdGenerator();
-const generateCommentId = createIdGenerator();
-
-const createComment = () => {
-  const messageCounter = {
-    id: generateCommentId(),
-    avatar: `img/avatar-${getRandomInteger(1,idCommentCount)}.svg`,
-    message: getRandomArrayElement(messages) + getRandomArrayElement(messages),
-    name: getRandomArrayElement(names),
-  };
-  return messageCounter;
-};*/
-
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -53,17 +29,6 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-
-/*const createPhoto = () => ({
-  id: generateId(),
-  url:`photos/${generatePhotoId()}.jpg`,
-  description: getRandomArrayElement(descriptions),
-  likes: getRandomInteger(15,200),
-  comments:Array.from({length: getRandomInteger(1, 50)}, createComment),
-});*/
-
-
-//const creatPhotos = (count) => Array.from({length:count}, createPhoto);
 
 function debounce (callback, timeoutDelay = 500) {
   let timeoutId;

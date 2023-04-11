@@ -5,7 +5,7 @@ import {showSuccessMessage, showErrorMessage} from './message.js';
 import { sendPhoto } from './api.js';
 
 
-const maxTagCount = 5;
+const MAX_TAG_COUNT = 5;
 const uploadFile = document.querySelector('#upload-file');//загрузки файла
 const uploadСancel = document.querySelector('#upload-cancel');// закрытие файла
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -83,7 +83,7 @@ const isValidTag = (value) => {
 
 const validTagCount = (tags) => {// проверяем количество тегов
   const lengthTag = tags.trim().split(' ');
-  return lengthTag.length <= maxTagCount;
+  return lengthTag.length <= MAX_TAG_COUNT;
 };
 
 const validTagUnique = (tags) => { //проверяем на уникальность
