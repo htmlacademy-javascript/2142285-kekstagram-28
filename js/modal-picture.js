@@ -60,13 +60,6 @@ const getComments = (array) => {
     commentsLoader.classList.remove('hidden');
   }
 
-  if (commentsShown >= array.length) {
-    commentsLoader.classList.add('hidden');
-    commentsShown = array.length;
-  } else {
-    commentsLoader.classList.remove('hidden');
-  }
-
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShown; i++){
     const commentElement = renderComment(array[i]);
