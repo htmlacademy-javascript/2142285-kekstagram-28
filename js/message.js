@@ -26,7 +26,7 @@ const onClickOutModal = (evt) => { //закрытие сообщения есл�
   }
 };
 
-const showErrorMessage = function() {
+const showErrorMessage = () => {
   const errorMessage = errorTemlate.cloneNode(true);
   document.body.append(errorMessage);
   const errorModal = document.querySelector('.error');
@@ -41,14 +41,14 @@ const closeSuccessMessage = () => { //закрываем сообщение об
   document.querySelector('.success').remove(); // удаляем класс
 };
 
-function closeSuccessKeydown (evt) {// удаление через esc
+const closeSuccessKeydown = (evt) => {// удаление через esc
   if (isEscapeKey(evt)) {
     closeSuccessMessage();
     closeErrorMessage();
   }
-}
+};
 
-const showSuccessMessage = function() {
+const showSuccessMessage = () => {
   const successMessage = successTemlate.cloneNode(true);
   document.body.append(successMessage);
 
