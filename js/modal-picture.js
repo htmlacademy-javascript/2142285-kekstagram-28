@@ -1,8 +1,8 @@
 import {isEscapeKey} from './util.js';
 import {renderThumbnails} from './thumbnail.js';
 
-let commentsShown = 0; // показанных коментов
-const commentsPerLoad = 5;// сколько надо показывать коментов
+let COMMENTS_SHOWN = 0; // показанных коментов
+const COMMENTS_PER_LOAD = 5;// сколько надо показывать коментов
 const bigPicture = document.querySelector('.big-picture');//находим класс больших фото
 const bigPictureCancel = document.querySelector('.big-picture__cancel');// находим скласс для удаление фото
 const container = document.querySelector('.pictures');//контейнер для массив миниатюр
@@ -15,21 +15,24 @@ let commentsArray = [];
 const onDocumentKeydown = (evt) => { // выносим функцию для обработчика
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeBigPicture ();
+    bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
-function openBigPicture () { // функция для удаления класса и добавления обработчика
+const openBigPicture = () => { // функция для удаления класса и добавления обработчика
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
-function closeBigPicture () { // функция для добавления класса и удаления обработчика
+const closeBigPicture = () => { // функция для добавления класса и удаления обработчика
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-}
+};
+
 bigPictureCancel.addEventListener('click', () => { //добавляем класс hidden прячем большое изображение
   closeBigPicture();
 });
@@ -52,23 +55,23 @@ const renderPictureDetails = (picture) => { // создаем большую ф�
 
 // функция для показа 5 комментарие
 const getComments = (array) => {
-  commentsShown += commentsPerLoad;
-  if (commentsShown >= array.length) {
+  COMMENTS_SHOWN += COMMENTS_PER_LOAD;
+  if (COMMENTS_SHOWN >= array.length) {
     commentsLoader.classList.add('hidden');
-    commentsShown = array.length;
+    COMMENTS_SHOWN = array.length;
   } else {
     commentsLoader.classList.remove('hidden');
   }
 
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < commentsShown; i++){
+  for (let i = 0; i < COMMENTS_SHOWN; i++){
     const commentElement = renderComment(array[i]);
     fragment.append(commentElement);
   }
   commentList.innerHTML = '';
   commentList.append(fragment);
 
-  commentsCount.innerHTML = `${commentsShown} из ${array.length} комментариев`;
+  commentsCount.innerHTML = `${COMMENTS_SHOWN} из ${array.length} комментариев`;
 };
 
 commentsLoader.addEventListener('click', () => {
@@ -90,8 +93,8 @@ const renderGallery = (pictures) => {
     if (!thumbnail){
       return;
     }
-    if (commentsShown >= 1){
-      commentsShown = 0;
+    if (COMMENTS_SHOWN >= 1){
+      COMMENTS_SHOWN = 0;
     }
 
     const picture = pictures.find( // ищем в массиве миниатюр

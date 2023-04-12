@@ -4,16 +4,17 @@ import {closeimgUpload, onDocumentKeydown} from './form.js';
 const successTemlate = document.querySelector('#success').content.querySelector('.success');// шаблон успешной отпраки
 const errorTemlate = document.querySelector('#error').content.querySelector('.error');//шаблон Не отправки
 
-const closeErrorMessage = () => { // закрываем сообщение об ошибке
-  document.querySelector('.error').remove(); // удаляем класс error
-  document.removeEventListener('keydown', closeErrorKeydown);
+const closeErrorKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    document.querySelector('.error').remove();
+    document.removeEventListener('keydown', closeErrorKeydown);
+  }
 };
 
-function closeErrorKeydown (evt) {
-  if (isEscapeKey(evt)) {
-    closeErrorMessage();
-  }
-}
+const closeErrorMessage = () => {
+  document.querySelector('.error').remove();
+  document.removeEventListener('keydown', closeErrorKeydown);
+};
 
 const onClickOutModal = (evt) => { //закрытие сообщения если не модальное окно сообщения
   if(evt.target.matches('.success')){//если не окно сообщения
