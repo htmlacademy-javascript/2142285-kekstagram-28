@@ -15,21 +15,24 @@ let commentsArray = [];
 const onDocumentKeydown = (evt) => { // выносим функцию для обработчика
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeBigPicture ();
+    bigPicture.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', onDocumentKeydown);
   }
 };
 
-function openBigPicture () { // функция для удаления класса и добавления обработчика
+const openBigPicture = () => { // функция для удаления класса и добавления обработчика
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
-function closeBigPicture () { // функция для добавления класса и удаления обработчика
+const closeBigPicture = () => { // функция для добавления класса и удаления обработчика
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-}
+};
+
 bigPictureCancel.addEventListener('click', () => { //добавляем класс hidden прячем большое изображение
   closeBigPicture();
 });

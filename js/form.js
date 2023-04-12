@@ -29,23 +29,23 @@ const pristine = new Pristine(form, {
 const onDocumentKeydown = (evt) => { // выносим функцию для обработчика
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeimgUpload ();
+    imgUploadOverlay.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', onDocumentKeydown);
+    form.reset();// сбрасываем поля формы
+    pristine.reset();
+    resetScale();
+    resetEffect();
   }
 };
 
-const stopFocus = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-  }
-};
-
-function openimgUpload () { // функция для удаления класса и добавления обработчика
+const openimgUpload = () => { // функция для удаления класса и добавления обработчика
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
-function closeimgUpload () { // функция для добавления класса и удаления обработчика
+const closeimgUpload = () => { // функция для добавления класса и удаления обработчика
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -53,7 +53,13 @@ function closeimgUpload () { // функция для добавления кл�
   pristine.reset();
   resetScale();
   resetEffect();
-}
+};
+
+const stopFocus = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
 
 uploadFile.addEventListener('change', () => { //добавляем класс hidden прячем модалку
   openimgUpload();
