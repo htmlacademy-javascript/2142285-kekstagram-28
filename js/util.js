@@ -30,17 +30,17 @@ const showAlert = (message) => {
 };
 
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function throttle (callback, delayBetweenFrames) {
+const throttle = (callback, delayBetweenFrames) => {
   let lastTime = 0;
   return (...rest) => {
     const now = new Date();
@@ -49,7 +49,7 @@ function throttle (callback, delayBetweenFrames) {
       lastTime = now;
     }
   };
-}
+};
 
 // Перемешиваем случайно массив
 const shuffleArrayRandom = (array) => {

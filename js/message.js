@@ -41,12 +41,12 @@ const closeSuccessMessage = () => { //закрываем сообщение об
   document.querySelector('.success').remove(); // удаляем класс
 };
 
-function closeSuccessKeydown (evt) {// удаление через esc
+const closeSuccessKeydown = (evt) => {// удаление через esc
   if (isEscapeKey(evt)) {
     closeSuccessMessage();
     closeErrorMessage();
   }
-}
+};
 
 const showSuccessMessage = function() {
   const successMessage = successTemlate.cloneNode(true);
