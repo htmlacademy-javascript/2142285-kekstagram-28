@@ -1,8 +1,10 @@
 import {isEscapeKey} from './util.js';
-import {closeimgUpload, onDocumentKeydown} from './form.js';
+import {closeImgUpload, onDocumentKeydown} from './form.js';
 
-const successTemlate = document.querySelector('#success').content.querySelector('.success');// шаблон успешной отпраки
-const errorTemlate = document.querySelector('#error').content.querySelector('.error');//шаблон Не отправки
+const successTemlate = document.querySelector('#success').content.querySelector('.success');
+const successMessage = successTemlate.cloneNode(true);
+const errorTemlate = document.querySelector('#error').content.querySelector('.error');
+const errorMessage = errorTemlate.cloneNode(true);
 
 const closeErrorKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -16,10 +18,10 @@ const closeErrorMessage = () => {
   document.removeEventListener('keydown', closeErrorKeydown);
 };
 
-const onClickOutModal = (evt) => { //закрытие сообщения если не модальное окно сообщения
-  if(evt.target.matches('.success')){//если не окно сообщения
-    document.querySelector('.success').remove();// удаляем класс
-    closeimgUpload();// закрываем модальное окно
+const onClickOutModal = (evt) => {
+  if(evt.target.matches('.success')){
+    document.querySelector('.success').remove();
+    closeImgUpload();
   }
   if(evt.target.matches('.error')){
     closeErrorMessage();
@@ -27,7 +29,6 @@ const onClickOutModal = (evt) => { //закрытие сообщения есл�
 };
 
 const showErrorMessage = () => {
-  const errorMessage = errorTemlate.cloneNode(true);
   document.body.append(errorMessage);
   const errorModal = document.querySelector('.error');
   const errorButton = document.querySelector('.error__button');
@@ -37,29 +38,25 @@ const showErrorMessage = () => {
   document.addEventListener('keydown', closeErrorKeydown);
 };
 
-const closeSuccessMessage = () => { //закрываем сообщение об успехе
-  document.querySelector('.success').remove(); // удаляем класс
+const closeSuccessMessage = () => {
+  document.body.append(successMessage);
+  document.querySelector('.success').remove();
 };
 
-const closeSuccessKeydown = (evt) => {// удаление через esc
+const closeSuccessKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     closeSuccessMessage();
-    closeErrorMessage();
   }
 };
 
 const showSuccessMessage = () => {
-  const successMessage = successTemlate.cloneNode(true);
   document.body.append(successMessage);
-
   const successModal = document.querySelector('.success');
   const successButton = document.querySelector('.success__button');
-
   successModal.addEventListener('click', onClickOutModal);
   successButton.addEventListener('click', closeSuccessMessage);
   document.removeEventListener('keydown', onDocumentKeydown);
   document.addEventListener('keydown', closeSuccessKeydown);
 };
-
 export {showErrorMessage, showSuccessMessage};
 

@@ -1,6 +1,6 @@
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-const photoChooser = document.querySelector('.img-upload__start input[type=file]'); //поле ввода, с помощью которого можно выбирать изображение;
-const preview = document.querySelector('.img-upload__preview img');//картинка, куда мы будем выставлять превью загруженного изображения.
+const photoChooser = document.querySelector('.img-upload__start input[type=file]');
+const preview = document.querySelector('.img-upload__preview img');
 
 const showNewPhoto = () => {
   photoChooser.addEventListener('change', () => {

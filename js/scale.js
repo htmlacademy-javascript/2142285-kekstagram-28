@@ -2,10 +2,10 @@ const DEFAULT_SCALE = 100;
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
 const STEP_SCALE = 25;
-const buttonSmallerScale = document.querySelector('.scale__control--smaller');// кнопка уменьшить
-const buttonBiggerScale = document.querySelector('.scale__control--bigger');// кнопка увеличить
-const imgScaleInput = document.querySelector('.scale__control--value');// поле с текстом изменения масштаба
-const imgPreview = document.querySelector('.img-upload__preview img');// загружаемая фотография
+const buttonSmallerScale = document.querySelector('.scale__control--smaller');
+const buttonBiggerScale = document.querySelector('.scale__control--bigger');
+const imgScaleInput = document.querySelector('.scale__control--value');
+const imgPreview = document.querySelector('.img-upload__preview img');
 
 const scaleImage = (value) => {
   imgPreview.style.transform = `scale(${value / 100})`;

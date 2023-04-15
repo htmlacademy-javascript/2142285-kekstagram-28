@@ -1,18 +1,18 @@
 import {isEscapeKey, showAlert} from './util.js';
 import {resetScale} from './scale.js';
 import {resetEffect} from './effect.js';
-import {showSuccessMessage, showErrorMessage} from './message.js';
+import {showErrorMessage, showSuccessMessage} from './message.js';//showErrorMessage, showSuccessMessage
 import { sendPhoto } from './api.js';
 
 
 const MAX_TAG_COUNT = 5;
-const uploadFile = document.querySelector('#upload-file');//загрузки файла
-const uploadСancel = document.querySelector('#upload-cancel');// закрытие файла
+const uploadFile = document.querySelector('#upload-file');
+const uploadСancel = document.querySelector('#upload-cancel');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const form = document.querySelector('.img-upload__form');
 const hashtageField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
-const sendButton = document.querySelector('.img-upload__submit');//кнопка публикации
+const sendButton = document.querySelector('.img-upload__submit');
 
 const SubmitButtonText = {
   IDLE: 'ОПУБЛИКОВАТЬ',
@@ -26,30 +26,30 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper--error',
 });
 
-const onDocumentKeydown = (evt) => { // выносим функцию для обработчика
+const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     imgUploadOverlay.classList.add('hidden');
     document.body.classList.remove('modal-open');
     document.removeEventListener('keydown', onDocumentKeydown);
-    form.reset();// сбрасываем поля формы
+    form.reset();
     pristine.reset();
     resetScale();
     resetEffect();
   }
 };
 
-const openimgUpload = () => { // функция для удаления класса и добавления обработчика
+const openImgUpload = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const closeimgUpload = () => { // функция для добавления класса и удаления обработчика
+const closeImgUpload = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  form.reset();// сбрасываем поля формы
+  form.reset();
   pristine.reset();
   resetScale();
   resetEffect();
@@ -61,20 +61,20 @@ const stopFocus = (evt) => {
   }
 };
 
-uploadFile.addEventListener('change', () => { //добавляем класс hidden прячем модалку
-  openimgUpload();
+uploadFile.addEventListener('change', () => {
+  openImgUpload();
 });
 
-uploadСancel.addEventListener('click', () => {//добавляем класс hidden прячем модалку
-  form.reset();// сбрасываем поля формы
+uploadСancel.addEventListener('click', () => {
+  form.reset();
   pristine.reset();
   resetScale();
   resetEffect();
-  closeimgUpload();
+  closeImgUpload();
 });
 
-hashtageField.addEventListener('keydown',stopFocus);//убираем закрытие через esc
-commentField.addEventListener('keydown',stopFocus);//убираем закрытие через esc
+hashtageField.addEventListener('keydown',stopFocus);
+commentField.addEventListener('keydown',stopFocus);
 
 const hashtag = /#[a-zа-яё0-9]{1,19}/i;
 const getHashTags = (value) => value.replace(/ +/g, ' ').trim().split(' ');
@@ -93,7 +93,7 @@ const validTagCount = (tags) => {// проверяем количество те
 };
 
 const validTagUnique = (tags) => { //проверяем на уникальность
-  const hashtagArray = tags.trim().split(' ');
+  const hashtagArray = tags.trim().toLowerCase().split(' ');
   const uniqueTags = [];
   for (let i = 0; i < hashtagArray.length; i++) {
     if(!uniqueTags.includes(hashtagArray[i])) {
@@ -146,7 +146,7 @@ const setUserFormSubmit = (onSuccess) => {
 
 const loadSussecs = () => {
   showSuccessMessage();
-  closeimgUpload();
+  closeImgUpload();
 };
 
-export {openimgUpload, stopFocus, setUserFormSubmit, closeimgUpload, loadSussecs, onDocumentKeydown};
+export {stopFocus, setUserFormSubmit, closeImgUpload, onDocumentKeydown, loadSussecs};

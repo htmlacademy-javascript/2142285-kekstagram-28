@@ -1,18 +1,18 @@
 import {isEscapeKey} from './util.js';
 import {renderThumbnails} from './thumbnail.js';
 
-let COMMENTS_SHOWN = 0; // показанных коментов
-const COMMENTS_PER_LOAD = 5;// сколько надо показывать коментов
-const bigPicture = document.querySelector('.big-picture');//находим класс больших фото
-const bigPictureCancel = document.querySelector('.big-picture__cancel');// находим скласс для удаление фото
-const container = document.querySelector('.pictures');//контейнер для массив миниатюр
-const commentList = bigPicture.querySelector('.social__comments');// спискок коментов
-const commentListItem = bigPicture.querySelector('.social__comment');// однин комента = шаблон
-const commentsCount = bigPicture.querySelector('.social__comment-count');// счетчик
-const commentsLoader = bigPicture.querySelector('.comments-loader'); // кнопка загрузить ещё
+let COMMENTS_SHOWN = 0;
+const COMMENTS_PER_LOAD = 5;
+const bigPicture = document.querySelector('.big-picture');
+const bigPictureCancel = document.querySelector('.big-picture__cancel');
+const container = document.querySelector('.pictures');
+const commentList = bigPicture.querySelector('.social__comments');
+const commentListItem = bigPicture.querySelector('.social__comment');
+const commentsCount = bigPicture.querySelector('.social__comment-count');
+const commentsLoader = bigPicture.querySelector('.comments-loader');
 let commentsArray = [];
 
-const onDocumentKeydown = (evt) => { // выносим функцию для обработчика
+const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
@@ -21,23 +21,22 @@ const onDocumentKeydown = (evt) => { // выносим функцию для о�
   }
 };
 
-const openBigPicture = () => { // функция для удаления класса и добавления обработчика
+const openBigPicture = () => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const closeBigPicture = () => { // функция для добавления класса и удаления обработчика
+const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-bigPictureCancel.addEventListener('click', () => { //добавляем класс hidden прячем большое изображение
+bigPictureCancel.addEventListener('click', () => {
   closeBigPicture();
 });
 
-// функция отрисовать и показать один коммент
 const renderComment = ({avatar, name, message}) => {
   const newComment = commentListItem.cloneNode(true);
   newComment.querySelector('.social__picture').src = avatar;
@@ -46,14 +45,13 @@ const renderComment = ({avatar, name, message}) => {
   return newComment;
 };
 
-const renderPictureDetails = (picture) => { // создаем большую фото
+const renderPictureDetails = (picture) => {
   bigPicture.querySelector('.big-picture__img img').src = picture.url;
   bigPicture.querySelector('.big-picture__img img').alt = picture.description;
   bigPicture.querySelector('.likes-count').textContent = picture.likes;
   bigPicture.querySelector('.social__caption').textContent = picture.description;
 };
 
-// функция для показа 5 комментарие
 const getComments = (array) => {
   COMMENTS_SHOWN += COMMENTS_PER_LOAD;
   if (COMMENTS_SHOWN >= array.length) {
@@ -79,17 +77,17 @@ commentsLoader.addEventListener('click', () => {
 });
 
 
-const showBigPicture = (data) => { // показываем большую фото
-  openBigPicture();//функция по открытию большой фотки
+const showBigPicture = (data) => {
+  openBigPicture();
   renderPictureDetails(data);
-  commentsArray = data.comments;//добовляем фото
+  commentsArray = data.comments;
   getComments(commentsArray);
 };
 
 const renderGallery = (pictures) => {
 
-  container.addEventListener('click', (evt) => {//вешаем обработчик на клик
-    const thumbnail = evt.target.closest('[data-thumbnail-id]');// ищем по атрибуту
+  container.addEventListener('click', (evt) => {
+    const thumbnail = evt.target.closest('[data-thumbnail-id]');
     if (!thumbnail){
       return;
     }
@@ -97,12 +95,12 @@ const renderGallery = (pictures) => {
       COMMENTS_SHOWN = 0;
     }
 
-    const picture = pictures.find( // ищем в массиве миниатюр
-      (item) => item.id === +thumbnail.dataset.thumbnailId//совпадение id фото с id миниатюры
+    const picture = pictures.find(
+      (item) => item.id === +thumbnail.dataset.thumbnailId
     );
-    showBigPicture(picture); // показывает большой фото из миниатюр
+    showBigPicture(picture);
   });
-  renderThumbnails(pictures,container); //возвращаем миниатюру
+  renderThumbnails(pictures,container);
 };
 
 export {renderGallery};
