@@ -11,6 +11,7 @@ const commentListItem = bigPicture.querySelector('.social__comment');
 const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 let commentsArray = [];
+let pictures = [];
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -84,23 +85,27 @@ const showBigPicture = (data) => {
   getComments(commentsArray);
 };
 
-const renderGallery = (pictures) => {
 
-  container.addEventListener('click', (evt) => {
-    const thumbnail = evt.target.closest('[data-thumbnail-id]');
-    if (!thumbnail){
-      return;
-    }
-    if (COMMENTS_SHOWN >= 1){
-      COMMENTS_SHOWN = 0;
-    }
+const onContainerClick = (evt) => {
+  const thumbnail = evt.target.closest('[data-thumbnail-id]');
+  if (!thumbnail){
+    return;
+  }
+  if (COMMENTS_SHOWN >= 1){
+    COMMENTS_SHOWN = 0;
+  }
 
-    const picture = pictures.find(
-      (item) => item.id === +thumbnail.dataset.thumbnailId
-    );
-    showBigPicture(picture);
-  });
+  evt.preventDefault();
+  const picture = pictures.find(
+    (item) => item.id === +thumbnail.dataset.thumbnailId
+  );
+  showBigPicture(picture);
+};
+
+const renderGallery = (currentPictures) => {
+  pictures = currentPictures;
   renderThumbnails(pictures,container);
+  container.addEventListener('click',onContainerClick);
 };
 
 export {renderGallery};

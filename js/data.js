@@ -1,4 +1,3 @@
-// массивы эффектов
 const EFFECTS = [
   {
     name: 'none',
