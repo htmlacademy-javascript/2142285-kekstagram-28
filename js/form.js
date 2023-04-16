@@ -1,7 +1,7 @@
 import {isEscapeKey, showAlert} from './util.js';
 import {resetScale} from './scale.js';
 import {resetEffect} from './effect.js';
-import {showErrorMessage, showSuccessMessage} from './message.js';//showErrorMessage, showSuccessMessage
+import {showErrorMessage, showSuccessMessage} from './message.js';
 import { sendPhoto } from './api.js';
 
 
