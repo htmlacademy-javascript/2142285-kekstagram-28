@@ -51,7 +51,6 @@ const throttle = (callback, delayBetweenFrames) => {
   };
 };
 
-// Перемешиваем случайно массив
 const shuffleArrayRandom = (array) => {
   for (let i = 0; i < array.length - 1; i++) {
     const j = getRandomInteger(0, array.length - 1);

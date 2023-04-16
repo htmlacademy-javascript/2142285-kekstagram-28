@@ -1,14 +1,14 @@
-import {effects} from './data.js';
+import {EFFECTS} from './data.js';
 
-const sliderElement = document.querySelector('.effect-level__slider');// слайдер - ручка
-const valueElement = document.querySelector('.effect-level__value');// поле ввода;
-const imgPreview = document.querySelector('.img-upload__preview img');// загружженное изображения, добавить класс и обновить filter
-const effectsList = document.querySelector('.effects__list');//  переключения эффектов
-const effectElement = document.querySelector('.img-upload__effect-level');//  полностью слайдер
+const sliderElement = document.querySelector('.effect-level__slider');
+const valueElement = document.querySelector('.effect-level__value');
+const imgPreview = document.querySelector('.img-upload__preview img');
+const effectsList = document.querySelector('.effects__list');
+const effectElement = document.querySelector('.img-upload__effect-level');
 
-let choosenEffect = effects[0];
+let choosenEffect = EFFECTS[0];
 
-noUiSlider.create(sliderElement, { //создаю слайдер
+noUiSlider.create(sliderElement, {
   range: {
     min: 0,
     max: 100,
@@ -19,7 +19,7 @@ noUiSlider.create(sliderElement, { //создаю слайдер
 });
 effectElement.classList.add('hidden');
 
-const applyEffect = () => { // подставляем значения из эффектов
+const applyEffect = () => {
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: choosenEffect.min,
@@ -30,7 +30,7 @@ const applyEffect = () => { // подставляем значения из эф
   });
 };
 
-const getSlaider = () => { // прячем или показываем слайдер
+const getSlaider = () => {
   if(choosenEffect.name === 'none'){
     effectElement.classList.add('hidden');
   } else {
@@ -39,8 +39,8 @@ const getSlaider = () => { // прячем или показываем слай�
   }
 };
 
-const filterImage = () => {// подставляем фильтры
-  const slaiderValue = sliderElement.noUiSlider.get(); //подписываюсь на события
+const filterImage = () => {
+  const slaiderValue = sliderElement.noUiSlider.get();
   if (choosenEffect.name === 'none') {
     imgPreview.style.filter = choosenEffect.style;
   } else {
@@ -54,17 +54,17 @@ const onEffectChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')){
     return;
   }
-  choosenEffect = effects.find((effect) => effect.name === evt.target.value); // перебираем массив находим класс
-  imgPreview.className = `effects__preview--${choosenEffect.name}`; // записываем класс
-  filterImage (); // поставляем фильтры
-  getSlaider(); // показываем слайдер со значениями из эффекта
+  choosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  imgPreview.className = `effects__preview--${choosenEffect.name}`;
+  filterImage ();
+  getSlaider();
 };
 
 effectsList.addEventListener('change',onEffectChange);
 const addEffects = sliderElement.noUiSlider.on('update', filterImage);
 
 const resetEffect = () => {
-  choosenEffect = effects[0];
+  choosenEffect = EFFECTS[0];
   imgPreview.className = `effects__preview--${choosenEffect.name}`;
   applyEffect();
   getSlaider();

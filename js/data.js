@@ -1,5 +1,4 @@
-// массивы эффектов
-const effects = [
+const EFFECTS = [
   {
     name: 'none',
     style: 'none',
@@ -50,4 +49,4 @@ const effects = [
   },
 ];
 
-export {effects};
+export {EFFECTS};

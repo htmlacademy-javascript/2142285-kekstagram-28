@@ -8,16 +8,12 @@ const picturesFiltersElement = document.querySelector('.img-filters');
 const filterRandomElement = document.querySelector('#filter-random');
 const filterDiscussedElement = document.querySelector('#filter-discussed');
 
-// Удаляем все созданные ранее изображения
 const removePictures = (elements) => elements.forEach((element) => element.remove());
 
-// Сортируем изображения случайно
 const sortRandom = (data) => shuffleArrayRandom(data).slice(0, COUNT_RANDOM_PICTURES);
 
-// Сортируем изображения по количеству комментариев
 const sortDiscussed = (data) => data.sort((a, b) => b.comments.length - a.comments.length);
 
-// Обновляем изображения в соответствии с выбранным фильтром сортировки
 const updatePictures = (targetElement, pictures) => {
   let copyPictures = pictures.slice();
 
@@ -32,10 +28,8 @@ const updatePictures = (targetElement, pictures) => {
   renderGallery(copyPictures);
 };
 
-// Рендерим изображения используя приём «устранение дребезга»
 const renderPicturesDelay = debounce((targetElement, pictures) => updatePictures(targetElement, pictures), DELAY_INTERVAL);
 
-// Иницируем работу с фильтрами сортировки изображений
 const initSortPicturesActions = (pictures) => {
   picturesFiltersElement.classList.remove('img-filters--inactive');
 
